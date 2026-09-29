@@ -1,0 +1,7 @@
+.details {
+  display: flex;
+  flex: 1 0 0;
+  flex-direction: column;
+  min-width: 1px;
+  color: var(--color-navy-80);
+}

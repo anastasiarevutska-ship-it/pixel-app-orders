@@ -1,0 +1,26 @@
+.root {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.md {
+  padding: 8px;
+  border-radius: var(--radius-md);
+}
+
+.sm {
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radius-sm);
+}
+
+.lavender {
+  background: var(--color-lavender-40);
+}
+
+.navy {
+  background: var(--color-navy);
+}

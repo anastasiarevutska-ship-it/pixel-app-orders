@@ -1,0 +1,28 @@
+.label {
+  display: inline-flex;
+  flex-shrink: 0;
+  padding: 4px;
+  border-radius: var(--radius-xs);
+  color: var(--color-navy-80);
+  white-space: nowrap;
+}
+
+.neutral {
+  background: var(--color-greay-60);
+}
+
+.yellow {
+  background: var(--color-yellow-80);
+}
+
+.red {
+  background: var(--color-red-20);
+}
+
+.violet {
+  background: var(--color-violet-v200);
+}
+
+.teal {
+  background: var(--color-teal-t100);
+}

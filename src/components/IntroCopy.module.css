@@ -1,0 +1,28 @@
+.intro {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  width: 100%;
+  padding-bottom: 8px;
+  text-align: center;
+}
+
+.heading {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  color: var(--color-navy);
+}
+
+/* Fixed text-box heights as set in Figma. */
+.day {
+  height: 53px;
+}
+
+.treatment {
+  height: 38px;
+}
+
+.message {
+  color: var(--color-navy-60);
+}

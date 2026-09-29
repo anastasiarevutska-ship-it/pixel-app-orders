@@ -1,0 +1,132 @@
+.map {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 326 / 420;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--color-gray-20);
+  box-shadow: var(--shadow-card);
+}
+
+.streets {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.water {
+  fill: var(--color-lavender-40);
+}
+
+.park {
+  fill: var(--color-teal-t100);
+}
+
+.road path {
+  fill: none;
+  stroke: var(--color-white);
+  stroke-width: 7;
+}
+
+.minor path {
+  fill: none;
+  stroke: var(--color-greay-60);
+  stroke-width: 1.5;
+}
+
+.ring {
+  fill: rgba(196, 166, 246, 0.08);
+  stroke: var(--color-lavender);
+  stroke-width: 1.5;
+  stroke-dasharray: 5 5;
+}
+
+/* Search location: Lavender dot with a soft halo. */
+.you {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  margin: -7px 0 0 -7px;
+  border: 3px solid var(--color-white);
+  border-radius: 50%;
+  background: var(--color-lavender);
+  box-shadow: 0 0 0 8px rgba(196, 166, 246, 0.3);
+}
+
+/* Pin: navy teardrop pointing at its location. */
+.pin {
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  margin: -34px 0 0 -14px; /* tip of the rotated drop sits on the location */
+  border-radius: 50% 50% 50% 0;
+  background: var(--color-navy);
+  transform: rotate(-45deg);
+  transform-origin: 50% 50%;
+  box-shadow: -2px 2px 6px rgba(7, 15, 63, 0.25);
+  transition:
+    background 150ms ease,
+    transform 150ms ease;
+}
+
+.pin span {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 28px;
+  text-align: center;
+  color: var(--color-white);
+  transform: rotate(45deg);
+}
+
+.pinFocused {
+  z-index: 2;
+  background: var(--color-lavender);
+  transform: rotate(-45deg) scale(1.2);
+}
+
+.pinFocused span {
+  color: var(--color-navy);
+}
+
+.scale {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  padding: 4px;
+  border-radius: var(--radius-xs);
+  color: var(--color-navy-80);
+  background: var(--color-white);
+}
+
+.sheet {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 12px;
+  z-index: 3;
+  animation: rise 200ms ease-out;
+}
+
+.sheet > section {
+  background-color: rgba(255, 255, 255, 0.72);
+}
+
+.sheetText {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  color: var(--color-navy-80);
+}
+
+.sheetMeta {
+  color: var(--color-navy-60);
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}

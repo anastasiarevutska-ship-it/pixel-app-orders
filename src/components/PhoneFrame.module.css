@@ -1,0 +1,61 @@
+.stage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100%;
+}
+
+.device {
+  position: relative;
+  flex-shrink: 0;
+  width: 100%;
+  height: 100dvh;
+  overflow: hidden;
+  background: var(--color-white);
+}
+
+.scroller {
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  /* Keep the last content clear of the fixed Nav overlay. */
+  padding-bottom: var(--nav-height);
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.scroller::-webkit-scrollbar {
+  display: none;
+}
+
+.aside {
+  display: none;
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 100;
+}
+
+/* Desktop / tablet presentation: a fixed-size phone centred in the browser. */
+@media (min-width: 500px) and (min-height: 700px) {
+  .stage {
+    padding: 24px;
+  }
+
+  .device {
+    width: var(--screen-width);
+    height: min(844px, calc(100dvh - 48px));
+    border-radius: 44px;
+    box-shadow:
+      0 0 0 10px #1b1d2a,
+      0 30px 60px rgba(7, 15, 63, 0.25);
+  }
+}
+
+/* Demo controls only where there is room beside the phone. */
+@media (min-width: 760px) and (min-height: 700px) {
+  .aside {
+    display: block;
+  }
+}

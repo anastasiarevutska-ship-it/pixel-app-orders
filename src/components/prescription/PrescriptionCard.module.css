@@ -1,0 +1,26 @@
+/* "MedicationDetails" column of the Medications / Upcoming event cards. */
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  color: var(--color-navy-80);
+}
+
+/* Name + status Label over the medication detail line. */
+.medication {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.nameRow {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.line {
+  display: block;
+}

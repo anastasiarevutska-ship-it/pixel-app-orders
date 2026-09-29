@@ -1,0 +1,229 @@
+/* HealNow is a separate service: it keeps Pixel's type and spacing but uses its own accent. */
+.sheet {
+  --healnow: #0f766e;
+  --healnow-tint: #e7f5f2;
+
+  position: absolute;
+  inset: 0;
+  z-index: 30;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: var(--home-indicator-height);
+  background: var(--color-white);
+  color: var(--color-navy);
+  animation: slide 280ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+@keyframes slide {
+  from {
+    transform: translateY(100%);
+  }
+}
+
+.header {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  padding: calc(20px + env(safe-area-inset-top)) 20px 12px;
+  border-bottom: 1px solid #e8ecef;
+}
+
+.cancel {
+  justify-self: start;
+  font-size: 15px;
+  color: var(--healnow);
+}
+
+.brand {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  font-size: 18px;
+  letter-spacing: -0.2px;
+}
+
+.mark {
+  width: 14px;
+  height: 14px;
+  border-radius: 4px;
+  background: var(--healnow);
+}
+
+.secure {
+  justify-self: end;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--healnow);
+  background: var(--healnow-tint);
+}
+
+.handoff {
+  padding: 8px 20px;
+  font-size: 12px;
+  text-align: center;
+  color: var(--color-navy-60);
+  background: #f6f8f9;
+}
+
+.body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 24px;
+  padding: 24px 20px 20px;
+  overflow-y: auto;
+}
+
+.amount {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: center;
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  background: var(--healnow-tint);
+}
+
+.caption {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--color-navy-60);
+}
+
+.total {
+  font-size: 40px;
+  font-weight: 500;
+  line-height: 1.1;
+}
+
+.methods {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sectionTitle {
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.method {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 14px 16px;
+  border: 1px solid #dfe4e8;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.method input {
+  accent-color: var(--healnow);
+}
+
+.selected {
+  border-color: var(--healnow);
+  box-shadow: 0 0 0 1px var(--healnow);
+}
+
+.methodLabel {
+  display: block;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.methodDetail {
+  display: block;
+  font-size: 12px;
+  color: var(--color-navy-60);
+}
+
+.footer {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: auto;
+}
+
+.pay {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  height: 52px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--color-white);
+  background: var(--healnow);
+  transition: filter 120ms ease;
+}
+
+.pay:hover:not(:disabled) {
+  filter: brightness(1.08);
+}
+
+.pay:disabled {
+  opacity: 0.85;
+  cursor: progress;
+}
+
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-top-color: var(--color-white);
+  border-radius: 50%;
+  animation: spin 700ms linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.legal {
+  font-size: 11px;
+  line-height: 1.4;
+  text-align: center;
+  color: var(--color-navy-60);
+}
+
+.done {
+  align-items: center;
+  padding-top: 64px;
+  text-align: center;
+}
+
+.check {
+  position: relative;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--healnow);
+}
+
+.check::after {
+  content: '';
+  position: absolute;
+  left: 23px;
+  top: 17px;
+  width: 14px;
+  height: 26px;
+  border: solid var(--color-white);
+  border-width: 0 4px 4px 0;
+  transform: rotate(45deg);
+}
+
+.doneTitle {
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.done .footer {
+  align-self: stretch;
+}

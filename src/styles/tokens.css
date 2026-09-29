@@ -1,0 +1,82 @@
+/*
+ * Design tokens verified from the Figma source
+ * (⭐️ NEW Patient App › Homescreem, node 16940:94628).
+ * Names mirror the Figma variable / style names.
+ */
+:root {
+  /* Colors — Figma variables */
+  --color-navy: #070f3f; /* Navy */
+  --color-navy-80: #393f65; /* Navy 80 */
+  --color-navy-60: #6a6f8c; /* Navy 60 */
+  --color-lavender: #c4a6f6; /* Lavender */
+  --color-lavender-40: #e7dbfb; /* Lavender 40 */
+  --color-lavender-20: #f3edfd; /* Lavender 20 */
+  --color-yellow-80: #fde9aa; /* Yellow 80 */
+  --color-yellow-40: #fef4d5; /* Yellow 40 */
+  --color-white: #ffffff; /* White / Pure White */
+  --color-black: #000000; /* System…/SystemWhite&Black/Dark */
+  --color-neutral-n900: #101840; /* Neutral/N900 — active tab label */
+  --color-neutral-n700: #696f8c; /* Neutral/N700 — inactive tab label */
+  --color-gray-20: #f9f8f8; /* Gray 20 — Notification_PopUp fill */
+  /* Status "Label" fills (card library, Medications card) */
+  --color-greay-60: #edebe9; /* Greay 60 (sic) */
+  --color-red-20: #ffd9d9; /* Red 20 */
+  --color-violet-v200: #d1caee; /* Violet/V200 */
+  --color-teal-t100: #d3f5f7; /* Teal/T100 */
+
+  /* Glass Morphism (fill + stroke styles) */
+  --glass-fill-from: rgba(255, 255, 255, 0.8);
+  --glass-fill-to: rgba(255, 255, 255, 0.2);
+  --glass-stroke: rgba(255, 255, 255, 0.4);
+  --glass-blur: 30px;
+
+  /* Typography — Figma text styles (all Space Grotesk) */
+  --font-family: 'Space Grotesk', system-ui, sans-serif;
+
+  --type-display-size: 44px; /* Display: Medium 44 / 100% */
+  --type-display-lh: 1;
+  --type-h3-size: 28px; /* H3: Bold 28 / 38px */
+  --type-h3-lh: 38px;
+  --type-h3-card-size: 22px; /* H3 (card library): Bold 22 / 120% */
+  --type-h3-card-lh: 1.2;
+  --type-h4-size: 22px; /* H4: Regular 22 / 120% */
+  --type-h4-lh: 1.2;
+  --type-h5-size: 16px; /* H5: Bold 16 / 22px / 3px tracking, uppercase */
+  --type-h5-lh: 22px;
+  --type-h5-tracking: 3px;
+  --type-body-size: 16px; /* Body / Body (Bold): 16 / 150% */
+  --type-body-lh: 1.5;
+  --type-body-small-size: 13px; /* Body Small: Regular 13 / 150% */
+  --type-body-small-lh: 1.5;
+  --type-label-size: 10px; /* Label (Bold): 10 / 13px / 1% */
+  --type-label-lh: 13px;
+  --type-label-tracking: 0.1px;
+  --type-caption-size: 11px; /* Captions: Bold 11 / auto / 1% */
+  --type-caption-tracking: 0.11px;
+  --type-tab-size: 12px; /* Nav bar label: 12 / 130% / 2% */
+  --type-tab-lh: 1.3;
+  --type-tab-tracking: 0.24px;
+
+  /* Radii */
+  --radius-xs: 2px; /* Eyebrow */
+  --radius-sm: 4px; /* ButtonIconSmall, StoryCard */
+  --radius-md: 8px; /* ButtonIcon, ArticleCard, ScheduleCard */
+  --radius-lg: 16px; /* Cards, LabTest, OTB, bottom sheet */
+
+  /* Shadows */
+  --shadow-card: -10px 10px 20px 0 rgba(7, 15, 63, 0.05);
+  --shadow-article: -4px 4px 12px 0 rgba(7, 15, 63, 0.08);
+  --shadow-sheet: 0 -16px 20px 0 rgba(7, 15, 63, 0.05);
+  --shadow-avatar: -4px 4px 10px rgba(7, 15, 63, 0.16);
+  --shadow-popup: -10px 10px 20px 0 rgba(7, 15, 63, 0.05); /* Glass Morph Card Small */
+  --shadow-field: 0 1px 0.5px rgba(0, 0, 0, 0.05); /* TextField_Light */
+  --shadow-caption-text: 0 0 2px rgba(7, 15, 63, 0.8);
+
+  /* Layout */
+  --screen-width: 390px; /* Figma frame width */
+  --screen-padding: 32px; /* Homescreen_Final padding */
+  --section-gap: 48px; /* Homescreen_Final item spacing */
+  --tabbar-height: 56px; /* Navbar */
+  --home-indicator-height: 34px; /* Home Indicator (iPhone) */
+  --nav-height: calc(var(--tabbar-height) + var(--home-indicator-height)); /* 90 */
+}
