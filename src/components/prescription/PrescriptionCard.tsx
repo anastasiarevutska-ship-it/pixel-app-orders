@@ -45,7 +45,6 @@ function statusMessage(state: PrototypeState): string {
     case 'priorAuth':
       return 'This specialty medication needs Prior Authorization. We’ve already started it for you.';
     case 'coverage':
-      if (state.payment === 'deferred') return 'Your payment is still pending.';
       return state.scenario.priorAuth
         ? 'Prior Authorization approved. Your coverage is ready.'
         : 'We’ve checked your benefits. Your coverage is ready.';
@@ -54,9 +53,9 @@ function statusMessage(state: PrototypeState): string {
         ? 'Payment received. Confirm where we should deliver your medication.'
         : 'Your insurance covers the full cost. Confirm where we should deliver your medication.';
     case 'pharmacy':
-      return state.payment === 'paid'
-        ? 'Payment received. Choose the pharmacy where you’ll pick up your medication.'
-        : 'Your insurance covers the full cost. Choose the pharmacy where you’ll pick up your medication.';
+      if (state.payment === 'paid') return 'Payment received. Choose the pharmacy where you’ll pick up your medication.';
+      if (state.payment === 'deferred') return 'Choose the pharmacy where you’ll pick up your medication.';
+      return 'Your insurance covers the full cost. Choose the pharmacy where you’ll pick up your medication.';
     default:
       return state.scenario.fulfillment === 'pickup'
         ? 'You’re all set. Your medication is ready for pickup.'
@@ -86,13 +85,18 @@ export function PrescriptionCard() {
   const pickup = state.pickupPharmacy;
   const collapsible = stage === 'complete' && !!pickup;
   const collapsed = collapsible && !expanded;
-  const receipt = state.payment === 'paid' && (
-    <LabeledValue label="Paid with HealNow">
-      {formatMoney(coverage.patientCost)} · Confirmation {state.paymentConfirmation}
-    </LabeledValue>
-  );
+  const receipt =
+    state.payment === 'paid' ? (
+      <LabeledValue label="Paid with HealNow">
+        {formatMoney(coverage.patientCost)} · Confirmation {state.paymentConfirmation}
+      </LabeledValue>
+    ) : state.payment === 'deferred' ? (
+      <LabeledValue label="Payment">
+        {formatMoney(coverage.patientCost)} · Pay at the pharmacy when you pick up
+      </LabeledValue>
+    ) : null;
   // Mail/Retail enter at coverage or fulfillment, so that first card also shows the prescriber.
-  const isEntryCard = !scenario.priorAuth && stage === entryStage(scenario) && state.payment !== 'deferred';
+  const isEntryCard = !scenario.priorAuth && stage === entryStage(scenario);
 
   return (
     <GlassCard angle={128.23550649877183}>
@@ -186,8 +190,10 @@ export function PrescriptionCard() {
             <LabeledValue label="Distance · Hours">
               {formatDistance(pickup.distance)} away · {pickup.hours}
             </LabeledValue>
+            {receipt}
             <LabeledValue label="What’s next">
-              Your prescription is set up. Head to {pickup.name} to pick up your medication.
+              Your prescription is set up. Head to {pickup.name} to{' '}
+              {state.payment === 'deferred' ? 'pay for and pick up' : 'pick up'} your medication.
             </LabeledValue>
           </>
         )}
@@ -208,7 +214,7 @@ export function PrescriptionCard() {
       {stage === 'coverage' && (
         <ButtonStack>
           <Button onClick={() => dispatch({ type: 'openPayment' })}>Pay {formatMoney(coverage.patientCost)}</Button>
-          {scenario.allowPayLater && state.payment !== 'deferred' && (
+          {scenario.allowPayLater && (
             <Button variant="secondary" onClick={() => dispatch({ type: 'payLater' })}>
               Pay later
             </Button>
