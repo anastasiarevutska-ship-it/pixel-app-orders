@@ -1,0 +1,44 @@
+.scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--screen-padding);
+  background: rgba(7, 15, 63, 0.32);
+  animation: fade 200ms ease-out;
+}
+
+.popup {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  align-items: center;
+  width: 100%;
+  max-width: 326px;
+  padding: 12px;
+  border-radius: var(--radius-md);
+  background: var(--color-gray-20);
+  box-shadow: var(--shadow-popup);
+  animation: rise 240ms ease-out;
+}
+
+.heading {
+  width: 100%;
+  color: var(--color-navy-80);
+  text-align: center;
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}

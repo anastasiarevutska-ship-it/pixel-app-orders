@@ -1,0 +1,162 @@
+/* Deliberately NOT Pixel styling: system font, dark tool panel. */
+.dock {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-end;
+  font-family: ui-sans-serif, -apple-system, 'Segoe UI', Roboto, sans-serif;
+}
+
+.fab {
+  padding: 10px 16px;
+  border: 1px dashed #5b6072;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #1c1e26;
+  background: #ffcc4d;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  width: 280px;
+  max-height: calc(100dvh - 100px);
+  padding: 18px;
+  overflow-y: auto;
+  border: 1px dashed #5b6072;
+  border-radius: 12px;
+  font-family: ui-sans-serif, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  font-size: 13px;
+  line-height: 1.4;
+  color: #e6e8ef;
+  background: #1c1e26;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
+}
+
+.panel h2 {
+  margin: 6px 0 2px;
+  font-size: 16px;
+}
+
+.panel h3 {
+  margin: 0 0 8px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #9aa0b4;
+}
+
+.header p {
+  margin: 0;
+  color: #9aa0b4;
+}
+
+.badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #1c1e26;
+  background: #ffcc4d;
+}
+
+.panel button {
+  font-family: inherit;
+}
+
+.primary,
+.reset {
+  width: 100%;
+  padding: 9px 12px;
+  border-radius: 8px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.primary {
+  margin-bottom: 10px;
+  color: #1c1e26;
+  background: #ffcc4d;
+}
+
+.primary:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.reset {
+  border: 1px solid #3a3e4c;
+  color: #c9ccd8;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.option {
+  padding: 7px 10px;
+  border-radius: 6px;
+  color: #c9ccd8;
+}
+
+.option:hover:not(:disabled) {
+  background: #2a2d38;
+}
+
+.option:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.list .active,
+.segmented .active {
+  color: #1c1e26;
+  background: #e6e8ef;
+}
+
+.segmented {
+  display: flex;
+  gap: 4px;
+  padding: 3px;
+  border-radius: 8px;
+  background: #2a2d38;
+}
+
+.segmented button {
+  flex: 1;
+  padding: 6px;
+  border-radius: 6px;
+  text-align: center;
+  color: #c9ccd8;
+}
+
+.readout dl {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 4px 10px;
+  margin: 0;
+}
+
+.readout dt {
+  color: #9aa0b4;
+}
+
+.readout dd {
+  margin: 0;
+  font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+  font-size: 12px;
+  word-break: break-word;
+}
+
+.spaced {
+  margin-bottom: 10px;
+}

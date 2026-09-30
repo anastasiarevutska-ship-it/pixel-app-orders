@@ -1,0 +1,60 @@
+/* "MedicationDetails" column of the Medications / Upcoming event cards. */
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  color: var(--color-navy-80);
+}
+
+/* Status Label, then name (+N meds) over the medication detail line. */
+.medication {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.nameRow {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.nameRow > button {
+  flex-shrink: 0;
+  margin-top: 1.5px;
+}
+
+/* Status Label above the medication, like the ScheduleCard Eyebrow (8px gap). */
+.eyebrow {
+  display: flex;
+  margin-bottom: 8px;
+}
+
+/* "+N meds": Label chip (Lavender 40), clickable. */
+.moreMeds {
+  display: inline-flex;
+  padding: 4px;
+  border-radius: var(--radius-xs);
+  color: var(--color-navy);
+  background: var(--color-lavender-40);
+  white-space: nowrap;
+}
+
+.otherMed {
+  margin-top: 12px;
+}
+
+.line {
+  display: block;
+}
+
+/* Tappable phone number under the pickup address. */
+.phone {
+  display: block;
+  font-weight: 400;
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}

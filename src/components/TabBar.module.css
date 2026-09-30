@@ -1,0 +1,82 @@
+.nav {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Navbar: white, 1px Lavender 20 top border, 56px tall. */
+.navbar {
+  position: relative;
+  height: var(--tabbar-height);
+  background: var(--color-white);
+  border-top: 1px solid var(--color-lavender-20);
+}
+
+/* 374px row, centred, 7px from the top of the navbar. */
+.items {
+  position: absolute;
+  left: 50%;
+  top: 7px;
+  display: flex;
+  width: 374px;
+  max-width: calc(100% - 16px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  transform: translateX(-50%);
+}
+
+.item {
+  display: flex;
+  flex: 1 0 0;
+  justify-content: center;
+  min-width: 1px;
+}
+
+.tab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.tab > span:first-child {
+  margin-bottom: -2px;
+}
+
+.label {
+  width: 100%;
+  font-size: var(--type-tab-size);
+  line-height: var(--type-tab-lh);
+  letter-spacing: var(--type-tab-tracking);
+  font-weight: 400;
+  text-align: center;
+  color: var(--color-neutral-n700);
+}
+
+.active .label {
+  font-weight: 500;
+  color: var(--color-neutral-n900);
+}
+
+/* Home Indicator (iPhone): 34px white area with a 134×5 bar, 8px from the bottom. */
+.homeIndicator {
+  position: relative;
+  height: var(--home-indicator-height);
+  background: var(--color-white);
+}
+
+.homeIndicator span {
+  position: absolute;
+  left: 50%;
+  bottom: 8px;
+  width: 134px;
+  height: 5px;
+  border-radius: 100px;
+  background: var(--color-black);
+  transform: translateX(-50%);
+}

@@ -1,0 +1,70 @@
+/* Figma text styles used on the Home screen (Space Grotesk). */
+.t-display {
+  font-size: var(--type-display-size);
+  line-height: var(--type-display-lh);
+  font-weight: 500;
+}
+
+.t-h3 {
+  font-size: var(--type-h3-size);
+  line-height: var(--type-h3-lh);
+  font-weight: 700;
+}
+
+.t-h3-card {
+  font-size: var(--type-h3-card-size);
+  line-height: var(--type-h3-card-lh);
+  font-weight: 700;
+}
+
+.t-h4 {
+  font-size: var(--type-h4-size);
+  line-height: var(--type-h4-lh);
+  font-weight: 400;
+}
+
+.t-h5 {
+  font-size: var(--type-h5-size);
+  line-height: var(--type-h5-lh);
+  letter-spacing: var(--type-h5-tracking);
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.t-body {
+  font-size: var(--type-body-size);
+  line-height: var(--type-body-lh);
+  font-weight: 400;
+}
+
+.t-body-bold {
+  font-size: var(--type-body-size);
+  line-height: var(--type-body-lh);
+  font-weight: 700;
+}
+
+.t-body-small {
+  font-size: var(--type-body-small-size);
+  line-height: var(--type-body-small-lh);
+  font-weight: 400;
+}
+
+.t-body-small-bold {
+  font-size: var(--type-body-small-size);
+  line-height: var(--type-body-small-lh);
+  font-weight: 700;
+}
+
+.t-label-bold {
+  font-size: var(--type-label-size);
+  line-height: var(--type-label-lh);
+  letter-spacing: var(--type-label-tracking);
+  font-weight: 700;
+}
+
+.t-caption {
+  font-size: var(--type-caption-size);
+  line-height: normal;
+  letter-spacing: var(--type-caption-tracking);
+  font-weight: 700;
+}

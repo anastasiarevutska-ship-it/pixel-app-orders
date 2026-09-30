@@ -1,0 +1,54 @@
+.card {
+  position: relative;
+  display: flex;
+  flex-shrink: 0;
+  width: 147px;
+  height: 198px;
+  padding: 8px;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  scroll-snap-align: start;
+}
+
+/* Image layer: 147×216.166 placed at (0, -18) relative to the card. */
+.imageLayer {
+  position: absolute;
+  left: 0;
+  top: -18px;
+  width: 147px;
+  height: 216.166px;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.cover {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cropped {
+  position: absolute;
+  max-width: none;
+}
+
+.content {
+  position: relative;
+  display: flex;
+  flex: 1 0 0;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: flex-end;
+  min-width: 1px;
+}
+
+.play {
+  margin-bottom: auto;
+}
+
+.title {
+  width: 100%;
+  color: var(--color-lavender-20);
+  text-shadow: var(--shadow-caption-text);
+  text-align: left;
+}

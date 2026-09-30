@@ -1,0 +1,7 @@
+.button {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  color: var(--color-navy);
+  white-space: nowrap;
+}

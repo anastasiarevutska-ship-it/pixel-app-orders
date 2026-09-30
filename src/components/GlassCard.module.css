@@ -1,0 +1,22 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+  padding: 12px;
+  overflow: hidden;
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  /* Figma strokes are inside and don't affect layout, so draw the stroke as an inset shadow. */
+  box-shadow:
+    inset 0 0 0 1px var(--glass-stroke),
+    var(--shadow-card);
+}
+
+.radiusLg {
+  border-radius: var(--radius-lg);
+}
+
+.radiusMd {
+  border-radius: var(--radius-md);
+}

@@ -1,0 +1,57 @@
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-start;
+  color: var(--color-navy);
+}
+
+/* "Eyebrow" */
+.eyebrow {
+  padding: 4px;
+  border-radius: var(--radius-xs);
+  background: var(--color-yellow-80);
+  color: var(--color-navy-80);
+  white-space: nowrap;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* "ScheduleItem" — 48px rows */
+.item {
+  display: flex;
+  gap: 16px;
+  align-items: stretch;
+  width: 100%;
+}
+
+.progress {
+  position: relative;
+  flex-shrink: 0;
+  width: 16px;
+}
+
+.progress img {
+  position: absolute;
+  inset: 0;
+  max-width: none;
+}
+
+/* ✕ mark: 6×6 group at (5, 9) in the row, stroke overflow 12.5% each side. */
+.progress .skip {
+  inset: auto;
+  left: 4.25px;
+  top: 8.25px;
+}
+
+.time {
+  flex-shrink: 0;
+  width: 68px;
+  color: var(--color-navy-80);
+}

@@ -1,0 +1,12 @@
+.row {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  width: 100%;
+}
+
+.title {
+  flex: 1 0 0;
+  min-width: 1px;
+  color: var(--color-navy);
+}
