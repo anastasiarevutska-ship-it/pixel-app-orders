@@ -14,12 +14,21 @@ import { prescriptionScenarios, type PrescriptionScenario } from '../data/prescr
  * entry point; its fulfillment decides the branch after coverage/payment:
  *
  *   Specialty: priorAuth → coverage* → address  → complete → handedOff (Delivery card)
+ *              priorAuth → priorAuthDenied (patient is asked to contact the prescriber)
  *   Mail:                  coverage* → address  → complete → handedOff (Delivery card)
  *   Retail:                coverage* → pharmacy → complete (ready for pickup)
  *
  *   * coverage (payment) is skipped when patientCost is $0.
  */
-export type PrescriptionStage = 'none' | 'priorAuth' | 'coverage' | 'address' | 'pharmacy' | 'complete' | 'handedOff';
+export type PrescriptionStage =
+  | 'none'
+  | 'priorAuth'
+  | 'priorAuthDenied'
+  | 'coverage'
+  | 'address'
+  | 'pharmacy'
+  | 'complete'
+  | 'handedOff';
 
 /** `deferred` = Retail "Pay later": the copay is paid at the pharmacy on pickup. */
 export type PaymentStatus = 'notRequired' | 'unpaid' | 'deferred' | 'paid';
@@ -54,10 +63,19 @@ export type PrototypeState = {
 };
 
 /** Stage shortcuts for the prototype demo controls. */
-export type DemoPreset = 'none' | 'entry' | 'coverage' | 'fulfillment' | 'payAtPickup' | 'complete' | 'handedOff';
+export type DemoPreset =
+  | 'none'
+  | 'entry'
+  | 'paDenied'
+  | 'coverage'
+  | 'fulfillment'
+  | 'payAtPickup'
+  | 'complete'
+  | 'handedOff';
 
 export type PrototypeAction =
   | { type: 'approvePriorAuth' }
+  | { type: 'denyPriorAuth' }
   | { type: 'openPayment' }
   | { type: 'paymentSucceeded'; confirmation: string }
   | { type: 'payLater' }
@@ -129,6 +147,8 @@ function jump(state: PrototypeState, preset: DemoPreset): PrototypeState {
       return { ...base, stage: 'none' };
     case 'entry':
       return { ...base, stage: entryStage(state.scenario) };
+    case 'paDenied':
+      return state.scenario.priorAuth ? { ...base, stage: 'priorAuthDenied' } : jump(state, 'entry');
     case 'coverage':
       if (!requiresPayment(state)) return { ...base, stage: fulfillmentStage(state.scenario) };
       return { ...base, stage: 'coverage', payment: 'unpaid' };
@@ -156,6 +176,9 @@ export function prototypeReducer(state: PrototypeState, action: PrototypeAction)
       if (state.stage !== 'priorAuth') return state;
       // $0 copay skips the payment step entirely.
       return { ...state, stage: requiresPayment(state) ? 'coverage' : fulfillmentStage(state.scenario) };
+
+    case 'denyPriorAuth':
+      return state.stage === 'priorAuth' ? { ...state, stage: 'priorAuthDenied' } : state;
 
     case 'openPayment':
       return state.stage === 'coverage' ? { ...state, overlay: 'healnow' } : state;

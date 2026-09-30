@@ -4,7 +4,7 @@ import { formatDistance } from '../../data/pharmacies';
 import { formatMoney } from '../../data/prescriptions';
 import { entryStage, type PrototypeState } from '../../state/prescriptionJourney';
 import { usePrototype } from '../../state/PrototypeContext';
-import { Button, ButtonStack } from '../Button';
+import { Button, ButtonLink, ButtonStack } from '../Button';
 import { CardHeader } from '../CardHeader';
 import { GlassCard } from '../GlassCard';
 import { LabeledValue } from '../LabeledValue';
@@ -12,10 +12,11 @@ import { StatusLabel, type StatusTone } from '../StatusLabel';
 import { CostBreakdown } from './CostBreakdown';
 import styles from './PrescriptionCard.module.css';
 
-type CardStage = 'priorAuth' | 'coverage' | 'address' | 'pharmacy' | 'complete';
+type CardStage = 'priorAuth' | 'priorAuthDenied' | 'coverage' | 'address' | 'pharmacy' | 'complete';
 
 const STATUS: Record<CardStage, { label: string; tone: StatusTone }> = {
   priorAuth: { label: 'Prior Authorization', tone: 'red' },
+  priorAuthDenied: { label: 'Authorization Denied', tone: 'red' },
   coverage: { label: 'Coverage Approved', tone: 'yellow' },
   address: { label: 'Delivery Address', tone: 'violet' },
   pharmacy: { label: 'Choose Pharmacy', tone: 'violet' },
@@ -44,6 +45,8 @@ function statusMessage(state: PrototypeState): string {
   switch (state.stage) {
     case 'priorAuth':
       return 'This specialty medication needs Prior Authorization. We’ve already started it for you.';
+    case 'priorAuthDenied':
+      return 'Your insurance didn’t approve Prior Authorization for this medication. Please contact your prescriber to discuss next steps.';
     case 'coverage':
       return state.scenario.priorAuth
         ? 'Prior Authorization approved. Your coverage is ready.'
@@ -159,6 +162,16 @@ export function PrescriptionCard() {
         )}
         {stage === 'priorAuth' && <LabeledValue label="Estimated time">{scenario.priorAuth?.estimate}</LabeledValue>}
 
+        {stage === 'priorAuthDenied' && (
+          <LabeledValue label="Contact your prescriber" size="md">
+            <span className={styles.line}>{scenario.prescriber.name}</span>
+            <span className={`${styles.line} ${styles.role}`}>{scenario.prescriber.role}</span>
+            <a className={styles.phone} href={`tel:${scenario.prescriber.phone.replace(/\D/g, '')}`}>
+              {scenario.prescriber.phone}
+            </a>
+          </LabeledValue>
+        )}
+
         {stage === 'coverage' && <CostBreakdown coverage={coverage} />}
 
         {stage === 'address' && (
@@ -229,6 +242,12 @@ export function PrescriptionCard() {
             Use a different address
           </Button>
         </ButtonStack>
+      )}
+
+      {stage === 'priorAuthDenied' && (
+        <ButtonLink href={`tel:${scenario.prescriber.phone.replace(/\D/g, '')}`}>
+          Call {scenario.prescriber.name}
+        </ButtonLink>
       )}
 
       {stage === 'pharmacy' && <Button onClick={() => dispatch({ type: 'openPharmacyFinder' })}>Find a pharmacy</Button>}
