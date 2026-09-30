@@ -7,7 +7,7 @@
   color: var(--color-navy-80);
 }
 
-/* Name + status Label over the medication detail line. */
+/* Status Label, then name (+N meds) over the medication detail line. */
 .medication {
   display: flex;
   flex-direction: column;
@@ -21,17 +21,15 @@
   justify-content: space-between;
 }
 
-.nameRow > span {
+.nameRow > button {
+  flex-shrink: 0;
   margin-top: 1.5px;
 }
 
-/* Medication name + "+N meds" chip; the chip wraps under long names. */
-.nameGroup {
+/* Status Label above the medication, like the ScheduleCard Eyebrow (8px gap). */
+.eyebrow {
   display: flex;
-  flex-wrap: wrap;
-  gap: 2px 8px;
-  align-items: center;
-  min-width: 0;
+  margin-bottom: 8px;
 }
 
 /* "+N meds": Label chip (Lavender 40), clickable. */

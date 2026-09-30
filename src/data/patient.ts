@@ -9,6 +9,8 @@ export type Address = {
 
 export type PatientProfile = {
   deliveryAddress: Address;
+  /** Pre-filled by HealNow at checkout. Mock value. */
+  email: string;
 };
 
 export const initialPatientProfile: PatientProfile = {
@@ -19,6 +21,7 @@ export const initialPatientProfile: PatientProfile = {
     state: 'OH',
     zip: '43215',
   },
+  email: 'samantha.reed@example.com',
 };
 
 export function formatAddressLines(a: Address): string[] {

@@ -105,9 +105,11 @@ export function PrescriptionCard() {
 
       {collapsed && pickup ? (
         <div className={styles.body}>
-          <div className={styles.nameRow}>
+          <div className={styles.medication}>
+            <span className={styles.eyebrow}>
+              <StatusLabel tone={status.tone}>{status.label}</StatusLabel>
+            </span>
             <p className="t-body-bold">{scenario.medication.name}</p>
-            <StatusLabel tone={status.tone}>{status.label}</StatusLabel>
           </div>
           <p className="t-body-bold">
             {pickup.name} | {formatDistance(pickup.distance)}
@@ -115,23 +117,24 @@ export function PrescriptionCard() {
         </div>
       ) : (
       <div className={styles.body}>
-        {/* Home "MedicationDetails" pattern: bold name + regular detail, with the status Label. */}
+        {/* Status Label as an eyebrow (ScheduleCard pattern) over the Home "MedicationDetails"
+            pattern: bold name + regular detail, with "+N meds" on the right. */}
         <div className={styles.medication}>
-          <div className={styles.nameRow}>
-            <div className={styles.nameGroup}>
-              <p className="t-body-bold">{scenario.medication.name}</p>
-              {others.length > 0 && (
-                <button
-                  type="button"
-                  className={`${styles.moreMeds} t-label-bold pressable`}
-                  aria-expanded={showOthers}
-                  onClick={() => setShowOthers((v) => !v)}
-                >
-                  {showOthers ? 'Show less' : `+${others.length} meds`}
-                </button>
-              )}
-            </div>
+          <span className={styles.eyebrow}>
             <StatusLabel tone={status.tone}>{status.label}</StatusLabel>
+          </span>
+          <div className={styles.nameRow}>
+            <p className="t-body-bold">{scenario.medication.name}</p>
+            {others.length > 0 && (
+              <button
+                type="button"
+                className={`${styles.moreMeds} t-label-bold pressable`}
+                aria-expanded={showOthers}
+                onClick={() => setShowOthers((v) => !v)}
+              >
+                {showOthers ? 'Show less' : `+${others.length} meds`}
+              </button>
+            )}
           </div>
           <p className="t-body">{scenario.medication.detail}</p>
           {showOthers &&
