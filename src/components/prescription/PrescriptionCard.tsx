@@ -4,7 +4,7 @@ import { formatDistance } from '../../data/pharmacies';
 import { formatMoney } from '../../data/prescriptions';
 import { entryStage, type PrototypeState } from '../../state/prescriptionJourney';
 import { usePrototype } from '../../state/PrototypeContext';
-import { Button, ButtonStack } from '../Button';
+import { Button, ButtonLink, ButtonStack } from '../Button';
 import { CardHeader } from '../CardHeader';
 import { GlassCard } from '../GlassCard';
 import { LabeledValue } from '../LabeledValue';
@@ -12,10 +12,11 @@ import { StatusLabel, type StatusTone } from '../StatusLabel';
 import { CostBreakdown } from './CostBreakdown';
 import styles from './PrescriptionCard.module.css';
 
-type CardStage = 'priorAuth' | 'coverage' | 'address' | 'pharmacy' | 'complete';
+type CardStage = 'priorAuth' | 'priorAuthDenied' | 'coverage' | 'address' | 'pharmacy' | 'complete';
 
 const STATUS: Record<CardStage, { label: string; tone: StatusTone }> = {
   priorAuth: { label: 'Prior Authorization', tone: 'red' },
+  priorAuthDenied: { label: 'Authorization Denied', tone: 'red' },
   coverage: { label: 'Coverage Approved', tone: 'yellow' },
   address: { label: 'Delivery Address', tone: 'violet' },
   pharmacy: { label: 'Choose Pharmacy', tone: 'violet' },
@@ -44,8 +45,9 @@ function statusMessage(state: PrototypeState): string {
   switch (state.stage) {
     case 'priorAuth':
       return 'This specialty medication needs Prior Authorization. We’ve already started it for you.';
+    case 'priorAuthDenied':
+      return 'Your insurance didn’t approve Prior Authorization for this medication. Please contact your prescriber to discuss next steps.';
     case 'coverage':
-      if (state.payment === 'deferred') return 'Your payment is still pending.';
       return state.scenario.priorAuth
         ? 'Prior Authorization approved. Your coverage is ready.'
         : 'We’ve checked your benefits. Your coverage is ready.';
@@ -54,9 +56,9 @@ function statusMessage(state: PrototypeState): string {
         ? 'Payment received. Confirm where we should deliver your medication.'
         : 'Your insurance covers the full cost. Confirm where we should deliver your medication.';
     case 'pharmacy':
-      return state.payment === 'paid'
-        ? 'Payment received. Choose the pharmacy where you’ll pick up your medication.'
-        : 'Your insurance covers the full cost. Choose the pharmacy where you’ll pick up your medication.';
+      if (state.payment === 'paid') return 'Payment received. Choose the pharmacy where you’ll pick up your medication.';
+      if (state.payment === 'deferred') return 'Choose the pharmacy where you’ll pick up your medication.';
+      return 'Your insurance covers the full cost. Choose the pharmacy where you’ll pick up your medication.';
     default:
       return state.scenario.fulfillment === 'pickup'
         ? 'You’re all set. Your medication is ready for pickup.'
@@ -86,13 +88,18 @@ export function PrescriptionCard() {
   const pickup = state.pickupPharmacy;
   const collapsible = stage === 'complete' && !!pickup;
   const collapsed = collapsible && !expanded;
-  const receipt = state.payment === 'paid' && (
-    <LabeledValue label="Paid with HealNow">
-      {formatMoney(coverage.patientCost)} · Confirmation {state.paymentConfirmation}
-    </LabeledValue>
-  );
+  const receipt =
+    state.payment === 'paid' ? (
+      <LabeledValue label="Paid with HealNow">
+        {formatMoney(coverage.patientCost)} · Confirmation {state.paymentConfirmation}
+      </LabeledValue>
+    ) : state.payment === 'deferred' ? (
+      <LabeledValue label="Payment">
+        {formatMoney(coverage.patientCost)} · Pay at the pharmacy when you pick up
+      </LabeledValue>
+    ) : null;
   // Mail/Retail enter at coverage or fulfillment, so that first card also shows the prescriber.
-  const isEntryCard = !scenario.priorAuth && stage === entryStage(scenario) && state.payment !== 'deferred';
+  const isEntryCard = !scenario.priorAuth && stage === entryStage(scenario);
 
   return (
     <GlassCard angle={128.23550649877183}>
@@ -155,6 +162,16 @@ export function PrescriptionCard() {
         )}
         {stage === 'priorAuth' && <LabeledValue label="Estimated time">{scenario.priorAuth?.estimate}</LabeledValue>}
 
+        {stage === 'priorAuthDenied' && (
+          <LabeledValue label="Contact your prescriber" size="md">
+            <span className={styles.line}>{scenario.prescriber.name}</span>
+            <span className={`${styles.line} ${styles.role}`}>{scenario.prescriber.role}</span>
+            <a className={styles.phone} href={`tel:${scenario.prescriber.phone.replace(/\D/g, '')}`}>
+              {scenario.prescriber.phone}
+            </a>
+          </LabeledValue>
+        )}
+
         {stage === 'coverage' && <CostBreakdown coverage={coverage} />}
 
         {stage === 'address' && (
@@ -186,8 +203,10 @@ export function PrescriptionCard() {
             <LabeledValue label="Distance · Hours">
               {formatDistance(pickup.distance)} away · {pickup.hours}
             </LabeledValue>
+            {receipt}
             <LabeledValue label="What’s next">
-              Your prescription is set up. Head to {pickup.name} to pick up your medication.
+              Your prescription is set up. Head to {pickup.name} to{' '}
+              {state.payment === 'deferred' ? 'pay for and pick up' : 'pick up'} your medication.
             </LabeledValue>
           </>
         )}
@@ -208,7 +227,7 @@ export function PrescriptionCard() {
       {stage === 'coverage' && (
         <ButtonStack>
           <Button onClick={() => dispatch({ type: 'openPayment' })}>Pay {formatMoney(coverage.patientCost)}</Button>
-          {scenario.allowPayLater && state.payment !== 'deferred' && (
+          {scenario.allowPayLater && (
             <Button variant="secondary" onClick={() => dispatch({ type: 'payLater' })}>
               Pay later
             </Button>
@@ -223,6 +242,12 @@ export function PrescriptionCard() {
             Use a different address
           </Button>
         </ButtonStack>
+      )}
+
+      {stage === 'priorAuthDenied' && (
+        <ButtonLink href={`tel:${scenario.prescriber.phone.replace(/\D/g, '')}`}>
+          Call {scenario.prescriber.name}
+        </ButtonLink>
       )}
 
       {stage === 'pharmacy' && <Button onClick={() => dispatch({ type: 'openPharmacyFinder' })}>Find a pharmacy</Button>}

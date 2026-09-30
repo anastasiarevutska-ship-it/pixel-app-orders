@@ -10,6 +10,7 @@
   color: var(--color-navy);
   text-align: center;
   white-space: nowrap;
+  text-decoration: none;
 }
 
 .primary {

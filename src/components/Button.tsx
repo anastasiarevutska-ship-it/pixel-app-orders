@@ -1,4 +1,4 @@
-import type { ButtonHTMLAttributes, ReactNode } from 'react';
+import type { AnchorHTMLAttributes, ButtonHTMLAttributes, ReactNode } from 'react';
 import styles from './Button.module.css';
 
 type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
@@ -11,6 +11,15 @@ export function Button({ variant = 'primary', className, type = 'button', ...res
   return (
     <button type={type} className={`${styles.button} ${styles[variant]} t-body-bold pressable ${className ?? ''}`} {...rest} />
   );
+}
+
+/** Link styled as a Button, e.g. a `tel:` call action. */
+export function ButtonLink({
+  variant = 'primary',
+  className,
+  ...rest
+}: AnchorHTMLAttributes<HTMLAnchorElement> & { variant?: 'primary' | 'secondary' }) {
+  return <a className={`${styles.button} ${styles[variant]} t-body-bold pressable ${className ?? ''}`} {...rest} />;
 }
 
 /** Vertical CTA stack (Figma "CTAs": 16px gap). */

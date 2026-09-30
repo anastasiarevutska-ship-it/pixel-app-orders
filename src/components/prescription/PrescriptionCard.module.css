@@ -58,3 +58,7 @@
   text-decoration: underline;
   text-underline-offset: 3px;
 }
+
+.role {
+  font-weight: 400;
+}

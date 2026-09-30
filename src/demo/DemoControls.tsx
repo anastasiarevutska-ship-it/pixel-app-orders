@@ -26,13 +26,14 @@ const PRESETS: PresetDef[] = [
     label: '1 · Prior Authorization in progress',
     hidden: 'noPriorAuth',
   },
+  { id: 'paDenied', label: '1b · Prior Authorization denied', hidden: 'noPriorAuth' },
   { id: 'coverage', label: '2 · Coverage ready — payment due' },
-  { id: 'coverageDeferred', label: '2b · Payment deferred (Pay later)', hidden: 'noPayLater' },
   {
     id: 'fulfillment',
     label: '3 · Confirm delivery address',
     pickupLabel: '3 · Choose pickup pharmacy',
   },
+  { id: 'payAtPickup', label: '3b · Pay later — pay at pickup', hidden: 'noPayLater' },
   {
     id: 'complete',
     label: '4 · Success',
@@ -49,7 +50,9 @@ function currentPreset(state: PrototypeState): DemoPreset | undefined {
   const { stage, payment } = state;
   if (stage === 'none') return 'none';
   if (stage === 'priorAuth') return 'entry';
-  if (stage === 'coverage') return payment === 'deferred' ? 'coverageDeferred' : 'coverage';
+  if (stage === 'priorAuthDenied') return 'paDenied';
+  if (stage === 'coverage') return 'coverage';
+  if (stage === 'pharmacy' && payment === 'deferred') return 'payAtPickup';
   if (stage === 'address' || stage === 'pharmacy') return 'fulfillment';
   return stage;
 }
@@ -100,14 +103,24 @@ export function DemoControls() {
               ))}
             </div>
             {isSpecialty && (
-              <button
-                type="button"
-                className={styles.primary}
-                disabled={state.stage !== 'priorAuth'}
-                onClick={() => dispatch({ type: 'approvePriorAuth' })}
-              >
-                Simulate PA approval
-              </button>
+              <div className={styles.paActions}>
+                <button
+                  type="button"
+                  className={styles.primary}
+                  disabled={state.stage !== 'priorAuth'}
+                  onClick={() => dispatch({ type: 'approvePriorAuth' })}
+                >
+                  Simulate PA approval
+                </button>
+                <button
+                  type="button"
+                  className={styles.reset}
+                  disabled={state.stage !== 'priorAuth'}
+                  onClick={() => dispatch({ type: 'denyPriorAuth' })}
+                >
+                  Simulate PA denial
+                </button>
+              </div>
             )}
             <div className={styles.list}>
               {presets.map((p) => (
@@ -115,7 +128,7 @@ export function DemoControls() {
                   key={p.id}
                   type="button"
                   className={`${styles.option} ${p.id === active ? styles.active : ''}`}
-                  disabled={zeroCopay && p.id.startsWith('coverage')}
+                  disabled={zeroCopay && (p.id === 'coverage' || p.id === 'payAtPickup')}
                   onClick={() => dispatch({ type: 'demoJump', preset: p.id })}
                 >
                   {pickup && p.pickupLabel ? p.pickupLabel : p.label}

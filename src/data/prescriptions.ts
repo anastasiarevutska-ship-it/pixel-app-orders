@@ -25,7 +25,8 @@ export type PrescriptionScenario = {
   medication: Medication;
   /** Other medications on the same prescription (shown via "+N meds" on the card). */
   otherMedications?: Medication[];
-  prescriber: { name: string; role: string };
+  /** Phone is a fictional 555-01xx number. */
+  prescriber: { name: string; role: string; phone: string };
   /** Only Specialty prescriptions need Prior Authorization. */
   priorAuth?: { estimate: string };
   pharmacy: string;
@@ -45,7 +46,7 @@ const specialtyBase: Omit<PrescriptionScenario, 'id' | 'coverage'> = {
     { name: 'Cetrotide', detail: '0.25mg · 5 syringes' },
     { name: 'Novarel', detail: '10,000 IU · 1 vial' },
   ],
-  prescriber: { name: 'Dr. Emily Chen', role: 'Reproductive Endocrinologist' },
+  prescriber: { name: 'Dr. Emily Chen', role: 'Reproductive Endocrinologist', phone: '(614) 555-0127' },
   priorAuth: { estimate: 'Usually 2–3 days' },
   pharmacy: 'Pixel Specialty Pharmacy',
   delivery: { estimate: 'Friday, Sept. 29 | By 8:00pm', summary: '4 medication(s) are being prepared.' },
@@ -60,7 +61,7 @@ const mailBase: Omit<PrescriptionScenario, 'id' | 'coverage'> = {
     { name: 'Prenatal vitamin', detail: '1 tablet · 30 tablets' },
     { name: 'Aspirin', detail: '81mg · 30 tablets' },
   ],
-  prescriber: { name: 'Dr. Emily Chen', role: 'Reproductive Endocrinologist' },
+  prescriber: { name: 'Dr. Emily Chen', role: 'Reproductive Endocrinologist', phone: '(614) 555-0127' },
   pharmacy: 'Pixel Mail Pharmacy',
   delivery: { estimate: 'Saturday, Sept. 30 | By 8:00pm', summary: '4 medication(s) are being prepared.' },
 };
@@ -75,7 +76,7 @@ const retailBase: Omit<PrescriptionScenario, 'id' | 'coverage'> = {
     { name: 'Methylprednisolone', detail: '16mg · 4 tablets' },
     { name: 'Ondansetron', detail: '4mg · 6 tablets' },
   ],
-  prescriber: { name: 'Dr. Emily Chen', role: 'Reproductive Endocrinologist' },
+  prescriber: { name: 'Dr. Emily Chen', role: 'Reproductive Endocrinologist', phone: '(614) 555-0127' },
   pharmacy: 'your pharmacy',
 };
 

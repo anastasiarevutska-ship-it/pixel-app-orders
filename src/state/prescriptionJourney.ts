@@ -14,13 +14,23 @@ import { prescriptionScenarios, type PrescriptionScenario } from '../data/prescr
  * entry point; its fulfillment decides the branch after coverage/payment:
  *
  *   Specialty: priorAuth → coverage* → address  → complete → handedOff (Delivery card)
+ *              priorAuth → priorAuthDenied (patient is asked to contact the prescriber)
  *   Mail:                  coverage* → address  → complete → handedOff (Delivery card)
  *   Retail:                coverage* → pharmacy → complete (ready for pickup)
  *
  *   * coverage (payment) is skipped when patientCost is $0.
  */
-export type PrescriptionStage = 'none' | 'priorAuth' | 'coverage' | 'address' | 'pharmacy' | 'complete' | 'handedOff';
+export type PrescriptionStage =
+  | 'none'
+  | 'priorAuth'
+  | 'priorAuthDenied'
+  | 'coverage'
+  | 'address'
+  | 'pharmacy'
+  | 'complete'
+  | 'handedOff';
 
+/** `deferred` = Retail "Pay later": the copay is paid at the pharmacy on pickup. */
 export type PaymentStatus = 'notRequired' | 'unpaid' | 'deferred' | 'paid';
 
 export type Overlay = 'none' | 'healnow' | 'addressForm' | 'pharmacyFinder';
@@ -53,10 +63,19 @@ export type PrototypeState = {
 };
 
 /** Stage shortcuts for the prototype demo controls. */
-export type DemoPreset = 'none' | 'entry' | 'coverage' | 'coverageDeferred' | 'fulfillment' | 'complete' | 'handedOff';
+export type DemoPreset =
+  | 'none'
+  | 'entry'
+  | 'paDenied'
+  | 'coverage'
+  | 'fulfillment'
+  | 'payAtPickup'
+  | 'complete'
+  | 'handedOff';
 
 export type PrototypeAction =
   | { type: 'approvePriorAuth' }
+  | { type: 'denyPriorAuth' }
   | { type: 'openPayment' }
   | { type: 'paymentSucceeded'; confirmation: string }
   | { type: 'payLater' }
@@ -128,16 +147,16 @@ function jump(state: PrototypeState, preset: DemoPreset): PrototypeState {
       return { ...base, stage: 'none' };
     case 'entry':
       return { ...base, stage: entryStage(state.scenario) };
+    case 'paDenied':
+      return state.scenario.priorAuth ? { ...base, stage: 'priorAuthDenied' } : jump(state, 'entry');
     case 'coverage':
-    case 'coverageDeferred':
       if (!requiresPayment(state)) return { ...base, stage: fulfillmentStage(state.scenario) };
-      return {
-        ...base,
-        stage: 'coverage',
-        payment: preset === 'coverageDeferred' && state.scenario.allowPayLater ? 'deferred' : 'unpaid',
-      };
+      return { ...base, stage: 'coverage', payment: 'unpaid' };
     case 'fulfillment':
       return { ...base, ...paid, stage: fulfillmentStage(state.scenario) };
+    case 'payAtPickup':
+      if (!requiresPayment(state) || !state.scenario.allowPayLater) return jump(state, 'fulfillment');
+      return { ...base, stage: fulfillmentStage(state.scenario), payment: 'deferred' };
     case 'complete':
     case 'handedOff': {
       if (state.scenario.fulfillment === 'pickup') {
@@ -158,6 +177,9 @@ export function prototypeReducer(state: PrototypeState, action: PrototypeAction)
       // $0 copay skips the payment step entirely.
       return { ...state, stage: requiresPayment(state) ? 'coverage' : fulfillmentStage(state.scenario) };
 
+    case 'denyPriorAuth':
+      return state.stage === 'priorAuth' ? { ...state, stage: 'priorAuthDenied' } : state;
+
     case 'openPayment':
       return state.stage === 'coverage' ? { ...state, overlay: 'healnow' } : state;
 
@@ -171,7 +193,9 @@ export function prototypeReducer(state: PrototypeState, action: PrototypeAction)
       };
 
     case 'payLater':
-      return state.scenario.allowPayLater ? { ...state, payment: 'deferred', overlay: 'none' } : state;
+      // Retail: skip online payment and go straight to choosing a pharmacy; pay there on pickup.
+      if (!state.scenario.allowPayLater || state.stage !== 'coverage') return state;
+      return { ...state, payment: 'deferred', stage: fulfillmentStage(state.scenario), overlay: 'none' };
 
     // Delivery fulfillment (Specialty / Mail)
     case 'confirmAddress':
