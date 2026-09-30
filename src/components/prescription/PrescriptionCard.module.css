@@ -17,10 +17,46 @@
 .nameRow {
   display: flex;
   gap: 8px;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
+}
+
+.nameRow > span {
+  margin-top: 1.5px;
+}
+
+/* Medication name + "+N meds" chip; the chip wraps under long names. */
+.nameGroup {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px 8px;
+  align-items: center;
+  min-width: 0;
+}
+
+/* "+N meds": Label chip (Lavender 40), clickable. */
+.moreMeds {
+  display: inline-flex;
+  padding: 4px;
+  border-radius: var(--radius-xs);
+  color: var(--color-navy);
+  background: var(--color-lavender-40);
+  white-space: nowrap;
+}
+
+.otherMed {
+  margin-top: 12px;
 }
 
 .line {
   display: block;
+}
+
+/* Tappable phone number under the pickup address. */
+.phone {
+  display: block;
+  font-weight: 400;
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }

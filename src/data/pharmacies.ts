@@ -8,6 +8,7 @@ export type Pharmacy = {
   address: string;
   cityStateZip: string;
   hours: string;
+  phone: string;
   /** Miles from the search location. */
   distance: number;
   /** Compass bearing from the search location (degrees), used to place map pins. */
@@ -24,7 +25,13 @@ type Area = { label: string; pharmacies: Pharmacy[] };
 
 type Seed = [name: string, address: string, cityStateZip: string, hours: string, distance: number, bearing: number];
 
-const area = (label: string, prefix: string, seeds: Seed[]): Area => ({
+/** Fictional number in the reserved 555-01xx range, stable per pharmacy name. */
+function mockPhone(name: string, areaCode: string): string {
+  const n = [...name].reduce((sum, ch) => (sum * 31 + ch.charCodeAt(0)) % 100, 7);
+  return `(${areaCode}) 555-01${String(n).padStart(2, '0')}`;
+}
+
+const area = (label: string, prefix: string, seeds: Seed[], areaCode = '614'): Area => ({
   label,
   pharmacies: seeds.map(([name, address, cityStateZip, hours, distance, bearing], i) => ({
     id: `${prefix}-${i + 1}`,
@@ -32,6 +39,7 @@ const area = (label: string, prefix: string, seeds: Seed[]): Area => ({
     address,
     cityStateZip,
     hours,
+    phone: mockPhone(name, areaCode),
     distance,
     bearing,
   })),
@@ -103,7 +111,7 @@ function generatedArea(zip: string): Area {
     Math.round((0.7 + i * i * 0.55 + (n % 7) * 0.1) * 10) / 10,
     (n * 7 + i * 83) % 360,
   ]);
-  return area(`ZIP ${zip}`, `z${zip}`, seeds);
+  return area(`ZIP ${zip}`, `z${zip}`, seeds, zip.slice(0, 3));
 }
 
 function areaFor(location: SearchLocation): Area {

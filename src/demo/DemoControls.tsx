@@ -15,7 +15,7 @@ type PresetDef = {
   id: DemoPreset;
   label: string;
   pickupLabel?: string;
-  hidden?: 'pickup' | 'noPriorAuth';
+  hidden?: 'pickup' | 'noPriorAuth' | 'noPayLater';
 };
 
 const PRESETS: PresetDef[] = [
@@ -27,7 +27,7 @@ const PRESETS: PresetDef[] = [
     hidden: 'noPriorAuth',
   },
   { id: 'coverage', label: '2 · Coverage ready — payment due' },
-  { id: 'coverageDeferred', label: '2b · Payment deferred (Pay later)' },
+  { id: 'coverageDeferred', label: '2b · Payment deferred (Pay later)', hidden: 'noPayLater' },
   {
     id: 'fulfillment',
     label: '3 · Confirm delivery address',
@@ -65,7 +65,9 @@ export function DemoControls() {
   const active = currentPreset(state);
   const presets = PRESETS.filter(
     (p) =>
-      !(p.hidden === 'pickup' && pickup) && !(p.hidden === 'noPriorAuth' && entryStage(state.scenario) !== 'priorAuth'),
+      !(p.hidden === 'pickup' && pickup) &&
+      !(p.hidden === 'noPriorAuth' && entryStage(state.scenario) !== 'priorAuth') &&
+      !(p.hidden === 'noPayLater' && !state.scenario.allowPayLater),
   );
 
   return (

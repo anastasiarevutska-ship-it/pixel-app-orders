@@ -14,18 +14,24 @@ export type Coverage = {
   patientCost: number;
 };
 
+export type Medication = { name: string; detail: string };
+
 export type PrescriptionScenario = {
   id: string;
   /** Determines where the patient enters the shared journey (Specialty starts at Prior Authorization). */
   prescriptionType: PrescriptionType;
   /** Determines the fulfillment branch after coverage/payment. */
   fulfillment: Fulfillment;
-  medication: { name: string; detail: string };
+  medication: Medication;
+  /** Other medications on the same prescription (shown via "+N meds" on the card). */
+  otherMedications?: Medication[];
   prescriber: { name: string; role: string };
   /** Only Specialty prescriptions need Prior Authorization. */
   priorAuth?: { estimate: string };
   pharmacy: string;
   coverage: Coverage;
+  /** Whether the patient may defer the copay ("Pay later"). Only Retail allows it. */
+  allowPayLater?: boolean;
   /** First Delivery-card state after a delivery journey completes (not used for pickup). */
   delivery?: { estimate: string; summary: string };
 };
@@ -34,25 +40,41 @@ const specialtyBase: Omit<PrescriptionScenario, 'id' | 'coverage'> = {
   prescriptionType: 'specialty',
   fulfillment: 'delivery',
   medication: { name: 'Gonal-f RFF Redi-ject', detail: '900 IU · 1 pen' },
+  otherMedications: [
+    { name: 'Menopur', detail: '75 IU · 10 vials' },
+    { name: 'Cetrotide', detail: '0.25mg · 5 syringes' },
+    { name: 'Novarel', detail: '10,000 IU · 1 vial' },
+  ],
   prescriber: { name: 'Dr. Emily Chen', role: 'Reproductive Endocrinologist' },
   priorAuth: { estimate: 'Usually 2–3 days' },
   pharmacy: 'Pixel Specialty Pharmacy',
-  delivery: { estimate: 'Friday, Sept. 29 | By 8:00pm', summary: '1 medication(s) are being prepared.' },
+  delivery: { estimate: 'Friday, Sept. 29 | By 8:00pm', summary: '4 medication(s) are being prepared.' },
 };
 
 const mailBase: Omit<PrescriptionScenario, 'id' | 'coverage'> = {
   prescriptionType: 'mail',
   fulfillment: 'delivery',
   medication: { name: 'Progesterone', detail: '200mg · 30 capsules' },
+  otherMedications: [
+    { name: 'Estradiol', detail: '2mg · 30 tablets' },
+    { name: 'Prenatal vitamin', detail: '1 tablet · 30 tablets' },
+    { name: 'Aspirin', detail: '81mg · 30 tablets' },
+  ],
   prescriber: { name: 'Dr. Emily Chen', role: 'Reproductive Endocrinologist' },
   pharmacy: 'Pixel Mail Pharmacy',
-  delivery: { estimate: 'Saturday, Sept. 30 | By 8:00pm', summary: '1 medication(s) are being prepared.' },
+  delivery: { estimate: 'Saturday, Sept. 30 | By 8:00pm', summary: '4 medication(s) are being prepared.' },
 };
 
 const retailBase: Omit<PrescriptionScenario, 'id' | 'coverage'> = {
   prescriptionType: 'retail',
   fulfillment: 'pickup',
+  allowPayLater: true,
   medication: { name: 'Letrozole', detail: '2.5mg · 5 tablets' },
+  otherMedications: [
+    { name: 'Doxycycline', detail: '100mg · 10 capsules' },
+    { name: 'Methylprednisolone', detail: '16mg · 4 tablets' },
+    { name: 'Ondansetron', detail: '4mg · 6 tablets' },
+  ],
   prescriber: { name: 'Dr. Emily Chen', role: 'Reproductive Endocrinologist' },
   pharmacy: 'your pharmacy',
 };

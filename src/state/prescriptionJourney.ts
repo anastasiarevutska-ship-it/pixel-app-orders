@@ -131,7 +131,11 @@ function jump(state: PrototypeState, preset: DemoPreset): PrototypeState {
     case 'coverage':
     case 'coverageDeferred':
       if (!requiresPayment(state)) return { ...base, stage: fulfillmentStage(state.scenario) };
-      return { ...base, stage: 'coverage', payment: preset === 'coverage' ? 'unpaid' : 'deferred' };
+      return {
+        ...base,
+        stage: 'coverage',
+        payment: preset === 'coverageDeferred' && state.scenario.allowPayLater ? 'deferred' : 'unpaid',
+      };
     case 'fulfillment':
       return { ...base, ...paid, stage: fulfillmentStage(state.scenario) };
     case 'complete':
@@ -167,7 +171,7 @@ export function prototypeReducer(state: PrototypeState, action: PrototypeAction)
       };
 
     case 'payLater':
-      return { ...state, payment: 'deferred', overlay: 'none' };
+      return state.scenario.allowPayLater ? { ...state, payment: 'deferred', overlay: 'none' } : state;
 
     // Delivery fulfillment (Specialty / Mail)
     case 'confirmAddress':

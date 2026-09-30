@@ -76,6 +76,9 @@ export function PrescriptionCard() {
   // The "Ready for Pickup" card stays on Home as a reference, so it can collapse like the Medications card.
   const [expanded, setExpanded] = useState(true);
   useEffect(() => setExpanded(true), [stage]);
+  const [showOthers, setShowOthers] = useState(false);
+  useEffect(() => setShowOthers(false), [scenario.id]);
+  const others = scenario.otherMedications ?? [];
   if (stage === 'none' || stage === 'handedOff') return null;
 
   const status = statusFor(state, stage);
@@ -115,10 +118,29 @@ export function PrescriptionCard() {
         {/* Home "MedicationDetails" pattern: bold name + regular detail, with the status Label. */}
         <div className={styles.medication}>
           <div className={styles.nameRow}>
-            <p className="t-body-bold">{scenario.medication.name}</p>
+            <div className={styles.nameGroup}>
+              <p className="t-body-bold">{scenario.medication.name}</p>
+              {others.length > 0 && (
+                <button
+                  type="button"
+                  className={`${styles.moreMeds} t-label-bold pressable`}
+                  aria-expanded={showOthers}
+                  onClick={() => setShowOthers((v) => !v)}
+                >
+                  {showOthers ? 'Show less' : `+${others.length} meds`}
+                </button>
+              )}
+            </div>
             <StatusLabel tone={status.tone}>{status.label}</StatusLabel>
           </div>
           <p className="t-body">{scenario.medication.detail}</p>
+          {showOthers &&
+            others.map((m) => (
+              <div key={m.name} className={styles.otherMed}>
+                <p className="t-body-bold">{m.name}</p>
+                <p className="t-body">{m.detail}</p>
+              </div>
+            ))}
         </div>
 
         <p className="t-body">{statusMessage(state)}</p>
@@ -154,6 +176,9 @@ export function PrescriptionCard() {
           <>
             <LabeledValue label="Pick up at" size="md">
               <Address lines={[pickup.name, pickup.address, pickup.cityStateZip]} />
+              <a className={styles.phone} href={`tel:${pickup.phone.replace(/\D/g, '')}`}>
+                {pickup.phone}
+              </a>
             </LabeledValue>
             <LabeledValue label="Distance · Hours">
               {formatDistance(pickup.distance)} away · {pickup.hours}
@@ -180,7 +205,7 @@ export function PrescriptionCard() {
       {stage === 'coverage' && (
         <ButtonStack>
           <Button onClick={() => dispatch({ type: 'openPayment' })}>Pay {formatMoney(coverage.patientCost)}</Button>
-          {state.payment !== 'deferred' && (
+          {scenario.allowPayLater && state.payment !== 'deferred' && (
             <Button variant="secondary" onClick={() => dispatch({ type: 'payLater' })}>
               Pay later
             </Button>
