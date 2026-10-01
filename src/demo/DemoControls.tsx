@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { brand } from '../brand';
 import { formatAddressLines } from '../data/patient';
 import { formatMoney, prescriptionScenarios, type PrescriptionType } from '../data/prescriptions';
 import { entryStage, type DemoPreset, type PrototypeState } from '../state/prescriptionJourney';
@@ -80,7 +81,7 @@ export function DemoControls() {
           <header className={styles.header}>
             <span className={styles.badge}>Prototype</span>
             <h2>Demo controls</h2>
-            <p>Not part of the Pixel app.</p>
+            <p>Not part of the {brand.appName} app.</p>
           </header>
 
           <section>

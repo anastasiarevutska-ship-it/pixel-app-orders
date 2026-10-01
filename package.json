@@ -6,6 +6,9 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "build:pixel": "VITE_BRAND=pixel npm run build",
+    "build:judi": "VITE_BRAND=judi npm run build",
+    "dev:judi": "VITE_BRAND=judi vite",
     "typecheck": "tsc -b",
     "preview": "vite preview"
   },

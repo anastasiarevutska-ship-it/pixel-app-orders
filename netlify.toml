@@ -1,0 +1,5 @@
+# One repo, two Netlify sites. Set VITE_BRAND (pixel | judi) per site in
+# Site configuration → Environment variables.
+[build]
+  command = "npm run build"
+  publish = "dist"

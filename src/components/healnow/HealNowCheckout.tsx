@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import '@fontsource/outfit/400.css';
 import '@fontsource/outfit/500.css';
+import { brand } from '../../brand';
 import { formatMoney } from '../../data/prescriptions';
 import { usePrototype } from '../../state/PrototypeContext';
 import styles from './HealNowCheckout.module.css';
@@ -91,7 +92,7 @@ export function HealNowCheckout() {
               {amount} paid · Confirmation {state.paymentConfirmation}
             </p>
             <button type="button" className={styles.pay} onClick={close}>
-              Return to Pixel
+              Return to {brand.appName}
             </button>
           </div>
         ) : (
