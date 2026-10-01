@@ -176,3 +176,7 @@
   opacity: 0.35;
   cursor: default;
 }
+
+.spacedBottom {
+  margin-bottom: 10px;
+}
