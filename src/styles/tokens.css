@@ -13,6 +13,8 @@
   --color-lavender-20: #f3edfd; /* Lavender 20 */
   --color-yellow-80: #fde9aa; /* Yellow 80 */
   --color-yellow-40: #fef4d5; /* Yellow 40 */
+  --color-primary: var(--color-lavender); /* primary CTA fill / outline */
+  --color-on-primary: var(--color-navy); /* text on primary CTA */
   --color-white: #ffffff; /* White / Pure White */
   --color-black: #000000; /* System…/SystemWhite&Black/Dark */
   --color-neutral-n900: #101840; /* Neutral/N900 — active tab label */
@@ -24,6 +26,8 @@
   --color-violet-v200: #d1caee; /* Violet/V200 */
   --color-teal-t100: #d3f5f7; /* Teal/T100 */
 
+  --page-bg: #e9e6f0; /* backdrop behind the phone frame */
+
   /* Glass Morphism (fill + stroke styles) */
   --glass-fill-from: rgba(255, 255, 255, 0.8);
   --glass-fill-to: rgba(255, 255, 255, 0.2);
@@ -32,6 +36,7 @@
 
   /* Typography — Figma text styles (all Space Grotesk) */
   --font-family: 'Space Grotesk', system-ui, sans-serif;
+  --weight-bold: 700;
 
   --type-display-size: 44px; /* Display: Medium 44 / 100% */
   --type-display-lh: 1;
@@ -61,6 +66,7 @@
   --radius-xs: 2px; /* Eyebrow */
   --radius-sm: 4px; /* ButtonIconSmall, StoryCard */
   --radius-md: 8px; /* ButtonIcon, ArticleCard, ScheduleCard */
+  --radius-button: var(--radius-md); /* CTA buttons */
   --radius-lg: 16px; /* Cards, LabTest, OTB, bottom sheet */
 
   /* Shadows */

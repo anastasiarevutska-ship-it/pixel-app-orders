@@ -22,7 +22,7 @@
 }
 
 .row dd {
-  font-weight: 700;
+  font-weight: var(--weight-bold);
   font-variant-numeric: tabular-nums;
 }
 

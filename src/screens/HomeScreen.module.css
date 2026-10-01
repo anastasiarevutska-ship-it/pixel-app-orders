@@ -15,13 +15,14 @@
   overflow: hidden;
 }
 
-.home > :not(.bgTop, .bgMirrored, .sheet) {
+.home > :not(.bgTop, .bgMirrored, .bgFull, .sheet) {
   position: relative;
 }
 
 /* "Rectangle" gradient image, 390×845 at the top. */
 .bgTop,
-.bgMirrored {
+.bgMirrored,
+.bgFull {
   position: absolute;
   left: 0;
   width: 100%;
@@ -32,6 +33,12 @@
 .bgTop {
   top: 0;
   height: 845px;
+}
+
+/* One tall image stretched over the full scroll height, so the gradient travels with the content. */
+.bgFull {
+  top: 0;
+  height: 100%;
 }
 
 /* Same image, 390×527 at y=842, flipped vertically. */

@@ -1,7 +1,8 @@
-import progressFirst from '../assets/figma/progress-first.svg';
-import progressLast from '../assets/figma/progress-last.svg';
-import progressMiddle from '../assets/figma/progress-middle.svg';
+import defaultFirst from '../assets/figma/progress-first.svg';
+import defaultLast from '../assets/figma/progress-last.svg';
+import defaultMiddle from '../assets/figma/progress-middle.svg';
 import skipMark from '../assets/figma/schedule-skip-mark.svg';
+import { brand } from '../brand';
 import type { ScheduleEntry, TodaySchedule } from '../data/home';
 import { GlassCard } from './GlassCard';
 import { MedicationDetails } from './MedicationDetails';
@@ -15,9 +16,9 @@ import styles from './ScheduleCard.module.css';
  * A skipped entry overlays the ✕ mark on the box.
  */
 function progressAsset(index: number, count: number) {
-  if (index === 0) return progressFirst;
-  if (index === count - 1) return progressLast;
-  return progressMiddle;
+  if (index === 0) return brand.icons.progressFirst ?? defaultFirst;
+  if (index === count - 1) return brand.icons.progressLast ?? defaultLast;
+  return brand.icons.progressMiddle ?? defaultMiddle;
 }
 
 function ScheduleItem({ entry, index, count }: { entry: ScheduleEntry; index: number; count: number }) {

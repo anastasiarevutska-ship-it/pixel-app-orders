@@ -2,6 +2,8 @@
  * Mock prescription scenarios. Journey state lives in src/state; this file
  * only describes the prescription itself, so scenarios can be swapped easily.
  */
+import { brand } from '../brand';
+
 export type PrescriptionType = 'specialty' | 'mail' | 'retail';
 
 /** How the patient receives the medication once paid for. */
@@ -48,7 +50,7 @@ const specialtyBase: Omit<PrescriptionScenario, 'id' | 'coverage'> = {
   ],
   prescriber: { name: 'Dr. Emily Chen', role: 'Reproductive Endocrinologist', phone: '(614) 555-0127' },
   priorAuth: { estimate: 'Usually 2–3 days' },
-  pharmacy: 'Pixel Specialty Pharmacy',
+  pharmacy: brand.pharmacies.specialty,
   delivery: { estimate: 'Friday, Sept. 29 | By 8:00pm', summary: '4 medication(s) are being prepared.' },
 };
 
@@ -62,7 +64,7 @@ const mailBase: Omit<PrescriptionScenario, 'id' | 'coverage'> = {
     { name: 'Aspirin', detail: '81mg · 30 tablets' },
   ],
   prescriber: { name: 'Dr. Emily Chen', role: 'Reproductive Endocrinologist', phone: '(614) 555-0127' },
-  pharmacy: 'Pixel Mail Pharmacy',
+  pharmacy: brand.pharmacies.mail,
   delivery: { estimate: 'Saturday, Sept. 30 | By 8:00pm', summary: '4 medication(s) are being prepared.' },
 };
 

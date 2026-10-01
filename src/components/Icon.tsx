@@ -12,6 +12,7 @@ import otbLogo from '../assets/figma/otb-logo.svg';
 import plusCircle from '../assets/figma/icon-plus-circle.svg';
 import truck from '../assets/figma/icon-truck.svg';
 import play from '../assets/figma/play.svg';
+import { brand } from '../brand';
 import styles from './Icon.module.css';
 
 /**
@@ -39,7 +40,8 @@ const ICONS = {
 export type IconName = keyof typeof ICONS;
 
 export function Icon({ name }: { name: IconName }) {
-  const { src, x, y } = ICONS[name];
+  const { src: defaultSrc, x, y } = ICONS[name];
+  const src = brand.icons[name as keyof typeof brand.icons] ?? defaultSrc;
   return (
     <span className={styles.icon} aria-hidden="true">
       <img src={src} alt="" style={{ left: x, top: y }} />
