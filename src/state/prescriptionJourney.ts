@@ -90,7 +90,8 @@ export type PrototypeAction =
   | { type: 'choosePharmacy'; id: string }
   | { type: 'chooseAnotherPharmacy' }
   | { type: 'confirmPharmacy' }
-  | { type: 'acknowledgeComplete' }
+  /** System event: the order now has a delivery, so the Delivery card replaces the Prescription card. */
+  | { type: 'deliveryCreated' }
   | { type: 'closeOverlay' }
   | { type: 'demoJump'; preset: DemoPreset }
   | { type: 'demoSetScenario'; scenario: PrescriptionScenario }
@@ -252,7 +253,7 @@ export function prototypeReducer(state: PrototypeState, action: PrototypeAction)
       };
     }
 
-    case 'acknowledgeComplete':
+    case 'deliveryCreated':
       return state.stage === 'complete' && state.scenario.fulfillment === 'delivery'
         ? { ...state, stage: 'handedOff' }
         : state;

@@ -26,6 +26,7 @@ const STATUS: Record<CardStage, { label: string; tone: StatusTone }> = {
 function statusFor(state: PrototypeState, stage: CardStage) {
   if (stage === 'coverage' && !state.scenario.priorAuth) return { ...STATUS.coverage, label: 'Coverage Ready' };
   if (stage === 'complete' && state.scenario.fulfillment === 'pickup') return { ...STATUS.complete, label: 'Ready for Pickup' };
+  if (stage === 'complete') return { ...STATUS.complete, label: 'Confirmed' };
   return STATUS[stage];
 }
 
@@ -62,7 +63,7 @@ function statusMessage(state: PrototypeState): string {
     default:
       return state.scenario.fulfillment === 'pickup'
         ? 'You’re all set. Your medication is ready for pickup.'
-        : 'You’re all set. Nothing else is needed from you.';
+        : 'Your order is confirmed. Nothing else is needed from you.';
   }
 }
 
@@ -252,7 +253,6 @@ export function PrescriptionCard() {
 
       {stage === 'pharmacy' && <Button onClick={() => dispatch({ type: 'openPharmacyFinder' })}>Find a pharmacy</Button>}
 
-      {stage === 'complete' && scenario.fulfillment === 'delivery' && <Button onClick={() => dispatch({ type: 'acknowledgeComplete' })}>Got it</Button>}
     </GlassCard>
   );
 }

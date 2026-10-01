@@ -36,12 +36,12 @@ const PRESETS: PresetDef[] = [
   { id: 'payAtPickup', label: '3b · Pay later — pay at pickup', hidden: 'noPayLater' },
   {
     id: 'complete',
-    label: '4 · Success',
+    label: '4 · Confirmed',
     pickupLabel: '4 · Success — ready for pickup',
   },
   {
     id: 'handedOff',
-    label: '5 · Handed off to Delivery card',
+    label: '5 · Delivery created — Delivery card replaces it',
     hidden: 'pickup',
   },
 ];
@@ -121,6 +121,16 @@ export function DemoControls() {
                   Simulate PA denial
                 </button>
               </div>
+            )}
+            {!pickup && (
+              <button
+                type="button"
+                className={`${styles.primary} ${styles.spacedBottom}`}
+                disabled={state.stage !== 'complete'}
+                onClick={() => dispatch({ type: 'deliveryCreated' })}
+              >
+                Simulate delivery created
+              </button>
             )}
             <div className={styles.list}>
               {presets.map((p) => (
