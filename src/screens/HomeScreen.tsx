@@ -27,8 +27,14 @@ export function HomeScreen() {
   return (
     <main className={styles.home}>
       {/* Decorative background layers, absolutely positioned as in Figma. */}
-      <img className={styles.bgTop} src={brand.bgGradient} alt="" />
-      <img className={styles.bgMirrored} src={brand.bgGradient} alt="" />
+      {brand.bgFull ? (
+        <img className={styles.bgFull} src={brand.bgGradient} alt="" />
+      ) : (
+        <>
+          <img className={styles.bgTop} src={brand.bgGradient} alt="" />
+          <img className={styles.bgMirrored} src={brand.bgGradient} alt="" />
+        </>
+      )}
       <div className={styles.sheet} />
 
       <ProfileHeader patient={patient} />

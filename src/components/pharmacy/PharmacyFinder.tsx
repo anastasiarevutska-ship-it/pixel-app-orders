@@ -38,7 +38,7 @@ export function PharmacyFinder() {
   return (
     <div className={styles.screen} role="dialog" aria-modal="true" aria-label="Find a pharmacy">
       <div className={styles.scroll}>
-        <img className={styles.bg} src={brand.bgGradient} alt="" />
+        <img className={styles.bg} src={brand.pharmacyBg ?? brand.bgGradient} alt="" />
 
         <header className={styles.header}>
           <IconButton

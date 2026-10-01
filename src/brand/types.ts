@@ -11,6 +11,10 @@ export type Brand = {
   logo?: string;
   /** Home / Pharmacy Finder backdrop image. */
   bgGradient: string;
+  /** Backdrop for the Find a Pharmacy screen; falls back to bgGradient. */
+  pharmacyBg?: string;
+  /** True when bgGradient is a tall image stretched over the whole scroll height (no repeat / mirroring). */
+  bgFull?: boolean;
   /** Recolored icon files that replace the default (Pixel) ones, keyed by icon name. */
   icons: Partial<Record<'home' | 'chevronDown' | 'chevronUpLight' | 'progressFirst' | 'progressMiddle' | 'progressLast', string>>;
   /** Loads this brand's fonts and theme CSS. Awaited before first render. */

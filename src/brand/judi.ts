@@ -1,5 +1,6 @@
 import logo from '../assets/judi/logo-color.svg';
-import bgGradient from '../assets/judi/bg-gradient.svg';
+import pharmacyBg from '../assets/judi/bg-pharmacy.png';
+import bgGradient from '../assets/judi/bg-gradient.webp';
 import chevronDown from '../assets/judi/chevron-down-small.svg';
 import chevronUpLight from '../assets/judi/chevron-up-small.svg';
 import home from '../assets/judi/icon-home.svg';
@@ -17,6 +18,8 @@ export const judi: Brand = {
   pharmacies: { specialty: 'Pixel Specialty Pharmacy', mail: 'Pixel Mail Pharmacy' },
   logo,
   bgGradient,
+  bgFull: true,
+  pharmacyBg,
   icons: { home, chevronDown, chevronUpLight, progressFirst, progressMiddle, progressLast },
   load: () =>
     Promise.all([
