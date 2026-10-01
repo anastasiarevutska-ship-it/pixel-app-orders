@@ -1,7 +1,7 @@
 .intro {
   display: flex;
   flex-direction: column;
-  gap: 22px;
+  gap: 16px;
   width: 100%;
   padding-bottom: 8px;
   text-align: center;
@@ -10,17 +10,17 @@
 .heading {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 12px;
   color: var(--color-navy);
 }
 
-/* Fixed text-box heights as set in Figma. */
+/* Text-box heights tightened from the Figma values (53 / 38). */
 .day {
-  height: 53px;
+  height: 46px;
 }
 
 .treatment {
-  height: 38px;
+  height: 28px;
 }
 
 .message {
