@@ -10,7 +10,6 @@ export const brand: Brand = brands[import.meta.env.VITE_BRAND as keyof typeof br
 export function applyBrand() {
   const root = document.documentElement;
   root.dataset.brand = brand.id;
-  for (const [name, value] of Object.entries(brand.cssVars)) root.style.setProperty(name, value);
   document.title = brand.title;
   document.querySelector('meta[name="theme-color"]')?.setAttribute('content', brand.themeColor);
 }

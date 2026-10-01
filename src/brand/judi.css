@@ -1,0 +1,41 @@
+/* Judi white-label theme: tokens from the Judi brand guide (colors p.20–23, typography p.24). */
+:root[data-brand='judi'] {
+  --color-navy: #00003f; /* Navy */
+  --color-navy-80: #333362; /* Text Navy */
+  --color-navy-60: #7f7f9c; /* Text Gray */
+  --color-lavender: #0007ba; /* Electric Blue — the single saturated accent (outlines, selected, focus) */
+  --color-lavender-40: #d8e8f6; /* Light Blue — chips, icon buttons */
+  --color-lavender-20: #f5fbfe; /* Extra Light blue — card fills */
+  --color-yellow-80: #fbd6aa; /* Marigold tint */
+  --color-yellow-40: #fdebd5;
+  --color-neutral-n900: #00003f;
+  --color-neutral-n700: #7f7f9c;
+  --color-gray-20: #f5fbfe;
+  --color-greay-60: #e8ebf2;
+  --color-red-20: #ffd6c7; /* Orange tint */
+  --color-violet-v200: #ddcbff; /* Purple tint */
+  --color-teal-t100: #cdeff4; /* Aqua tint */
+
+  --shadow-card: 2px 0 30px 0 rgba(0, 0, 165, 0.08);
+  --shadow-article: -4px 4px 12px 0 rgba(0, 0, 63, 0.08);
+  --shadow-sheet: 0 -16px 20px 0 rgba(0, 0, 63, 0.05);
+  --shadow-avatar: -4px 4px 10px rgba(0, 0, 63, 0.16);
+  --shadow-popup: 2px 0 30px 0 rgba(0, 0, 165, 0.08);
+  --shadow-caption-text: 0 0 2px rgba(0, 0, 63, 0.8);
+
+  --color-primary: var(--color-lavender); /* Electric Blue, as on judi.health CTAs */
+  --color-on-primary: #ffffff;
+  --radius-button: 100px; /* pill buttons */
+  --radius-lg: 20px; /* cards, ~20px on judi.health */
+
+  --page-bg: #d8e8f6;
+  --font-family: 'Source Sans 3', system-ui, sans-serif;
+  --font-heading: 'Rubik', system-ui, sans-serif;
+  --weight-bold: 600; /* Source Sans Semibold */
+}
+
+/* Page headings: Rubik Light. */
+:root[data-brand='judi'] :is(.t-display, .t-h3, .t-h3-card, .t-h4) {
+  font-family: var(--font-heading);
+  font-weight: 300;
+}

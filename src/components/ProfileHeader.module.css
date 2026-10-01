@@ -32,3 +32,10 @@
   color: var(--color-navy-80);
   white-space: nowrap;
 }
+
+.logo {
+  width: 84px;
+  height: auto;
+  margin-left: auto;
+  flex-shrink: 0;
+}

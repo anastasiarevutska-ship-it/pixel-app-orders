@@ -36,7 +36,7 @@
 }
 
 .ring {
-  fill: rgba(196, 166, 246, 0.08);
+  fill: color-mix(in srgb, var(--color-lavender) 8%, transparent);
   stroke: var(--color-lavender);
   stroke-width: 1.5;
   stroke-dasharray: 5 5;
@@ -51,7 +51,7 @@
   border: 3px solid var(--color-white);
   border-radius: 50%;
   background: var(--color-lavender);
-  box-shadow: 0 0 0 8px rgba(196, 166, 246, 0.3);
+  box-shadow: 0 0 0 8px color-mix(in srgb, var(--color-lavender) 30%, transparent);
 }
 
 /* Pin: navy teardrop pointing at its location. */
@@ -73,7 +73,7 @@
 .pin span {
   display: block;
   font-size: 11px;
-  font-weight: 700;
+  font-weight: var(--weight-bold);
   line-height: 28px;
   text-align: center;
   color: var(--color-white);

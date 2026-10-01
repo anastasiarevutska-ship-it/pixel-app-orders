@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react';
-import bgGradient from '../../assets/figma/bg-gradient.png';
+import { brand } from '../../brand';
 import { findPharmacy, locationLabel, searchPharmacies, type SearchLocation } from '../../data/pharmacies';
 import { usePrototype } from '../../state/PrototypeContext';
 import { IconButton } from '../IconButton';
@@ -38,7 +38,7 @@ export function PharmacyFinder() {
   return (
     <div className={styles.screen} role="dialog" aria-modal="true" aria-label="Find a pharmacy">
       <div className={styles.scroll}>
-        <img className={styles.bg} src={bgGradient} alt="" />
+        <img className={styles.bg} src={brand.bgGradient} alt="" />
 
         <header className={styles.header}>
           <IconButton

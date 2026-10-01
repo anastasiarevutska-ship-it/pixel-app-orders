@@ -7,6 +7,12 @@ export type Brand = {
   themeColor: string;
   /** Pharmacy names shown in prescription journeys. */
   pharmacies: { specialty: string; mail: string };
-  /** CSS custom property overrides on top of styles/tokens.css, e.g. { '--color-navy': '#000' }. */
-  cssVars: Record<string, string>;
+  /** Wordmark shown in the Home header. Omitted for brands that show none. */
+  logo?: string;
+  /** Home / Pharmacy Finder backdrop image. */
+  bgGradient: string;
+  /** Recolored icon files that replace the default (Pixel) ones, keyed by icon name. */
+  icons: Partial<Record<'home' | 'chevronDown' | 'chevronUpLight' | 'progressFirst' | 'progressMiddle' | 'progressLast', string>>;
+  /** Loads this brand's fonts and theme CSS. Awaited before first render. */
+  load: () => Promise<unknown>;
 };

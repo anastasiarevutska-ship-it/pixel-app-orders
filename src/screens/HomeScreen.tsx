@@ -1,4 +1,4 @@
-import bgGradient from '../assets/figma/bg-gradient.png';
+import { brand } from '../brand';
 import { ArticleCard } from '../components/ArticleCard';
 import { IntroCopy } from '../components/IntroCopy';
 import { LabTestCard } from '../components/LabTestCard';
@@ -27,8 +27,8 @@ export function HomeScreen() {
   return (
     <main className={styles.home}>
       {/* Decorative background layers, absolutely positioned as in Figma. */}
-      <img className={styles.bgTop} src={bgGradient} alt="" />
-      <img className={styles.bgMirrored} src={bgGradient} alt="" />
+      <img className={styles.bgTop} src={brand.bgGradient} alt="" />
+      <img className={styles.bgMirrored} src={brand.bgGradient} alt="" />
       <div className={styles.sheet} />
 
       <ProfileHeader patient={patient} />
